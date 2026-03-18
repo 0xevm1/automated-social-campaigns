@@ -28,6 +28,7 @@ export async function handleCompletionEvent(message: ServiceMessage): Promise<vo
       );
 
       await updateCampaignStatus(correlationId, 'completed', {
+        campaignName: payload.campaignName,
         completedAt: new Date().toISOString(),
         durationMs: payload.durationMs,
         manifestS3Key: `campaigns/${correlationId}/manifest.json`,
@@ -53,6 +54,7 @@ export async function handleCompletionEvent(message: ServiceMessage): Promise<vo
       );
 
       await updateCampaignStatus(correlationId, 'failed', {
+        campaignName: payload.campaignName,
         completedAt: new Date().toISOString(),
       });
 

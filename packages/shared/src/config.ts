@@ -35,4 +35,5 @@ export const S3_KEYS = {
   composite: (correlationId: string, slug: string, ratio: string) =>
     `campaigns/${correlationId}/output/${slug}/${ratio}/${slug}_${ratio}.png`,
   manifest: (correlationId: string) => `campaigns/${correlationId}/manifest.json`,
+  complianceReport: (correlationId: string) => `campaigns/${correlationId}/compliance-report.json`,
 };

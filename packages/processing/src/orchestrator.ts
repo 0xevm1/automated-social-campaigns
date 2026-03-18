@@ -74,6 +74,20 @@ export function createOrchestrator(bus: EventBus, options: OrchestratorOptions =
     const manifestKey = S3_KEYS.manifest(correlationId);
     await putObject(manifestKey, JSON.stringify(manifest, null, 2), 'application/json');
 
+    // Write final compliance report (overwrites intake-phase report with full picture)
+    const complianceKey = S3_KEYS.complianceReport(correlationId);
+    await putObject(
+      complianceKey,
+      JSON.stringify({
+        correlationId,
+        campaignName: activeBrief.campaignName,
+        completedAt: new Date().toISOString(),
+        warnings: allWarnings,
+        warningCount: allWarnings.length,
+      }, null, 2),
+      'application/json',
+    );
+
     log.info(
       { durationMs, assets: s3Keys.length, warnings: allWarnings.length },
       'Campaign processing completed',
@@ -114,7 +128,7 @@ export function createOrchestrator(bus: EventBus, options: OrchestratorOptions =
       bus.emit(PipelineEvent.BRIEF_VALIDATED, {
         brief,
         correlationId: payload.correlationId,
-        complianceWarnings: [],
+        complianceWarnings: payload.complianceWarnings ?? [],
       });
     } catch (err) {
       const errorMsg = err instanceof Error ? err.message : String(err);
@@ -216,8 +230,8 @@ export function createOrchestrator(bus: EventBus, options: OrchestratorOptions =
   });
 
   return {
-    start(brief: CampaignBrief, correlationId: string) {
-      bus.emit(PipelineEvent.BRIEF_RECEIVED, { brief, correlationId });
+    start(brief: CampaignBrief, correlationId: string, complianceWarnings: string[] = []) {
+      bus.emit(PipelineEvent.BRIEF_RECEIVED, { brief, correlationId, complianceWarnings });
     },
   };
 }

@@ -1,0 +1,35 @@
+{
+  "campaignName": "Less Is More — The Essentials Edit",
+  "campaignMessage": "Three steps. Real ingredients. Visible results.",
+  "products": [
+    {
+      "name": "The Gentle Cleanser",
+      "slug": "the-gentle-cleanser",
+      "description": "pH-balanced gel cleanser with green tea extract and aloe. Frosted glass pump bottle, sage green label with clean sans-serif typography.",
+      "heroImagePrompt": "Professional product photography of a frosted glass pump bottle with sage green minimalist label, gel texture droplet on white surface, soft botanical shadow overlay, clean spa-like environment, luxury skincare advertising, high resolution, photorealistic",
+      "brandColors": ["#A5D6A7", "#F5F5F5"]
+    },
+    {
+      "name": "The Daily Serum",
+      "slug": "the-daily-serum",
+      "description": "Lightweight hyaluronic acid and niacinamide serum. Amber glass dropper bottle, warm sand-colored label. Fragrance-free, suitable for sensitive skin.",
+      "heroImagePrompt": "Professional product photography of an amber glass dropper bottle with warm sand-colored label, golden serum drop suspended from dropper tip, soft morning light, neutral linen background, premium skincare advertising, high resolution, photorealistic",
+      "brandColors": ["#D7CCC8", "#F5F5F5"]
+    },
+    {
+      "name": "The Barrier Cream",
+      "slug": "the-barrier-cream",
+      "description": "Rich ceramide moisturizer for skin barrier repair. Matte white jar with soft blush accent stripe. Dermatologist-tested, no parabens.",
+      "heroImagePrompt": "Professional product photography of a minimalist matte white cream jar with soft blush pink accent stripe, swirl of thick cream next to jar, clean white surface, soft diffused lighting, dermatologist skincare advertising, high resolution, photorealistic",
+      "brandColors": ["#FFFFFF", "#F8BBD0"]
+    }
+  ],
+  "targetPlatforms": ["instagram", "tiktok"],
+  "textOverlay": {
+    "headline": "Less Is More",
+    "subheadline": "Three steps. Visible results.",
+    "ctaText": "Build Your Routine",
+    "fontColor": "#37474F",
+    "position": "top"
+  }
+}

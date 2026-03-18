@@ -43,7 +43,7 @@ export async function createCampaign(state: CampaignState): Promise<void> {
 export async function updateCampaignStatus(
   correlationId: string,
   status: CampaignState['status'],
-  updates: Partial<Pick<CampaignState, 'completedAt' | 'durationMs' | 'manifestS3Key'>>,
+  updates: Partial<Pick<CampaignState, 'campaignName' | 'completedAt' | 'durationMs' | 'manifestS3Key'>>,
 ): Promise<void> {
   const client = getDocClient();
 
@@ -51,6 +51,10 @@ export async function updateCampaignStatus(
   const names: Record<string, string> = { '#status': 'status' };
   const values: Record<string, any> = { ':status': status };
 
+  if (updates.campaignName !== undefined) {
+    expressionParts.push('campaignName = :campaignName');
+    values[':campaignName'] = updates.campaignName;
+  }
   if (updates.completedAt !== undefined) {
     expressionParts.push('completedAt = :completedAt');
     values[':completedAt'] = updates.completedAt;

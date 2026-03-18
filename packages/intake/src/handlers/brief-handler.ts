@@ -7,7 +7,7 @@ import {
   publishToTopic,
   createLogger,
 } from '@asc/shared';
-import { scanProhibitedWords } from '../pipeline/compliance.js';
+import { runFullComplianceCheck } from '../pipeline/compliance.js';
 
 export interface BriefHandlerResult {
   success: boolean;
@@ -28,8 +28,14 @@ export async function handleBrief(
     const brief = CampaignBriefSchema.parse(briefData);
     log.info({ campaign: brief.campaignName }, 'Brief validated');
 
-    // Compliance check
-    const complianceWarnings = scanProhibitedWords(brief, correlationId);
+    // Compliance checks (prohibited words, brand colors, logo presence)
+    const complianceReport = await runFullComplianceCheck(brief, correlationId);
+    const complianceWarnings = complianceReport.warnings;
+
+    // Persist structured compliance report
+    const reportKey = S3_KEYS.complianceReport(correlationId);
+    await putObject(reportKey, JSON.stringify(complianceReport, null, 2), 'application/json');
+    log.info({ reportKey, warnings: complianceWarnings.length }, 'Compliance report saved to S3');
 
     // Upload brief to S3
     const briefKey = S3_KEYS.brief(correlationId);
