@@ -21,6 +21,7 @@ export enum PipelineEvent {
 export interface BriefReceivedPayload {
   brief: CampaignBrief;
   correlationId: string;
+  complianceWarnings?: string[];
 }
 
 export interface BriefValidatedPayload {

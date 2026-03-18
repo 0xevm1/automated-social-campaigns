@@ -21,7 +21,7 @@ async function handleMessage(message: ServiceMessage): Promise<void> {
   );
 
   // Start the internal pipeline — it uses the in-process EventBus
-  orchestrator.start(brief, correlationId);
+  orchestrator.start(brief, correlationId, complianceWarnings ?? []);
 }
 
 const consumer = createSqsConsumer({

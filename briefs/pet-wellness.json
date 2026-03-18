@@ -1,0 +1,28 @@
+{
+  "campaignName": "Happy Tails Pet Wellness",
+  "campaignMessage": "Vet-formulated nutrition your pets actually love",
+  "products": [
+    {
+      "name": "TailWag Salmon Bites",
+      "slug": "tailwag-salmon-bites",
+      "description": "Grain-free dog treats made with wild-caught salmon. Resealable pouch in teal and coral. Rich in omega-3 for healthy coat and joints.",
+      "heroImagePrompt": "Professional product photography of a teal and coral resealable dog treat pouch, salmon-shaped treats spilling out, happy golden retriever blurred in background, bright cheerful lighting, pet food advertising style, high resolution, photorealistic",
+      "brandColors": ["#00897B", "#FF8A65"]
+    },
+    {
+      "name": "PurrBliss Calming Supplement",
+      "slug": "purrbliss-calming-supplement",
+      "description": "Liquid calming supplement for cats with L-theanine and chamomile. Dropper bottle in lavender and white. Unflavored for easy mixing with food.",
+      "heroImagePrompt": "Professional product photography of an elegant lavender and white dropper bottle, soft chamomile flowers nearby, peaceful sleeping cat softly blurred in background, warm gentle lighting, premium pet wellness advertising, high resolution, photorealistic",
+      "brandColors": ["#B39DDB", "#FAFAFA"]
+    }
+  ],
+  "targetPlatforms": ["instagram", "facebook"],
+  "textOverlay": {
+    "headline": "Happy Tails",
+    "subheadline": "Vet-formulated. Pet-approved.",
+    "ctaText": "Shop Wellness",
+    "fontColor": "#FFFFFF",
+    "position": "center"
+  }
+}

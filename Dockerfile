@@ -1,6 +1,6 @@
 FROM node:22-alpine
 
-RUN apk add --no-cache fontconfig ttf-dejavu ttf-freefont ttf-liberation \
+RUN apk add --no-cache fontconfig ttf-dejavu ttf-freefont ttf-liberation font-noto \
     && fc-cache -f
 
 RUN corepack enable

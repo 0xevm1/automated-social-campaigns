@@ -1,0 +1,35 @@
+{
+  "campaignName": "Summer Shred 2026",
+  "campaignMessage": "Train harder. Recover faster. Own the summer.",
+  "products": [
+    {
+      "name": "IronPulse Pre-Workout",
+      "slug": "ironpulse-pre-workout",
+      "description": "High-caffeine pre-workout powder in electric blue packaging. Explosive energy blend with beta-alanine and citrulline. Bold, aggressive sport branding.",
+      "heroImagePrompt": "Professional product photography of a sleek black and electric blue pre-workout supplement container, powder explosion effect, dark gym background with dramatic lighting, sports nutrition advertising style, high resolution, photorealistic",
+      "brandColors": ["#0D47A1", "#00E5FF"]
+    },
+    {
+      "name": "RecoverMax Protein Bar",
+      "slug": "recovermax-protein-bar",
+      "description": "Chocolate peanut butter protein bar with 30g protein. Matte brown wrapper with gold accents. Clean ingredients, no artificial sweeteners.",
+      "heroImagePrompt": "Professional product photography of a premium protein bar with chocolate and peanut butter chunks visible, matte brown and gold packaging, dramatic close-up with ingredients scattered around, dark background, fitness advertising style, high resolution, photorealistic",
+      "brandColors": ["#4E342E", "#FFD54F"]
+    },
+    {
+      "name": "HydroFlow Water Bottle",
+      "slug": "hydroflow-water-bottle",
+      "description": "Insulated stainless steel water bottle, 32oz, matte black with neon green accents. Time markers on the side for hydration tracking.",
+      "heroImagePrompt": "Professional product photography of a matte black stainless steel water bottle with neon green accents, water droplets on surface, gym environment in soft background blur, clean lighting, lifestyle product advertising, high resolution, photorealistic",
+      "brandColors": ["#212121", "#76FF03"]
+    }
+  ],
+  "targetPlatforms": ["instagram", "tiktok", "youtube"],
+  "textOverlay": {
+    "headline": "Summer Shred",
+    "subheadline": "Train harder. Recover faster.",
+    "ctaText": "Shop the Collection",
+    "fontColor": "#FFFFFF",
+    "position": "bottom"
+  }
+}

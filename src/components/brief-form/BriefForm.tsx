@@ -12,7 +12,6 @@ import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import sampleBrief from '../../../briefs/sample-brief.json';
 
 interface ProductData {
   name: string;
@@ -127,11 +126,21 @@ export function BriefForm() {
     }
   };
 
-  const loadSample = () => {
-    setCampaignName(sampleBrief.campaignName);
-    setCampaignMessage(sampleBrief.campaignMessage);
+  const loadSample = async () => {
+    const res = await fetch('/api/sample-briefs');
+    const briefs = (await res.json()) as Record<string, unknown>[];
+    if (!briefs.length) return;
+    const brief = briefs[Math.floor(Math.random() * briefs.length)] as {
+      campaignName: string;
+      campaignMessage: string;
+      products: { name: string; slug: string; description: string; heroImagePrompt?: string; brandColors?: string[] }[];
+      targetPlatforms?: string[];
+      textOverlay?: { headline?: string; subheadline?: string; ctaText?: string; fontColor?: string; position?: string };
+    };
+    setCampaignName(brief.campaignName);
+    setCampaignMessage(brief.campaignMessage);
     setProducts(
-      sampleBrief.products.map((p) => ({
+      brief.products.map((p) => ({
         name: p.name,
         slug: p.slug,
         description: p.description,
@@ -140,18 +149,23 @@ export function BriefForm() {
         heroImageUploaded: false,
       })),
     );
-    if (sampleBrief.targetPlatforms) {
-      setTargetPlatforms(sampleBrief.targetPlatforms);
+    if (brief.targetPlatforms) {
+      setTargetPlatforms(brief.targetPlatforms);
+    } else {
+      setTargetPlatforms([]);
     }
-    if (sampleBrief.textOverlay) {
+    if (brief.textOverlay) {
       setShowOverlay(true);
       setTextOverlay({
-        headline: sampleBrief.textOverlay.headline ?? '',
-        subheadline: sampleBrief.textOverlay.subheadline ?? '',
-        ctaText: sampleBrief.textOverlay.ctaText ?? '',
-        fontColor: sampleBrief.textOverlay.fontColor ?? '#FFFFFF',
-        position: (sampleBrief.textOverlay.position as 'top' | 'center' | 'bottom') ?? 'bottom',
+        headline: brief.textOverlay.headline ?? '',
+        subheadline: brief.textOverlay.subheadline ?? '',
+        ctaText: brief.textOverlay.ctaText ?? '',
+        fontColor: brief.textOverlay.fontColor ?? '#FFFFFF',
+        position: (brief.textOverlay.position as 'top' | 'center' | 'bottom') ?? 'bottom',
       });
+    } else {
+      setShowOverlay(false);
+      setTextOverlay({ ...emptyOverlay });
     }
     setErrors({});
   };

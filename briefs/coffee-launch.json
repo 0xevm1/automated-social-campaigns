@@ -1,0 +1,35 @@
+{
+  "campaignName": "Midnight Roast Collection",
+  "campaignMessage": "Dark, bold, unapologetically smooth",
+  "products": [
+    {
+      "name": "Midnight Espresso Blend",
+      "slug": "midnight-espresso-blend",
+      "description": "Single-origin dark roast espresso beans from Colombia. Rich chocolate and toasted walnut notes. Matte black bag with copper foil lettering.",
+      "heroImagePrompt": "Professional product photography of a premium matte black coffee bag with copper foil text, whole dark roast beans scattered around the base, warm moody lighting with steam wisps, dark wood surface, artisan coffee advertising style, high resolution, photorealistic",
+      "brandColors": ["#1A1A1A", "#D4873F"]
+    },
+    {
+      "name": "Cold Brew Concentrate",
+      "slug": "cold-brew-concentrate",
+      "description": "16oz glass bottle of cold brew coffee concentrate. Amber liquid visible through clear glass. Minimalist label with black and white typography.",
+      "heroImagePrompt": "Professional product photography of a clear glass bottle filled with dark amber cold brew coffee, condensation droplets on glass, ice cubes nearby, minimalist black and white label, light marble background, premium beverage advertising, high resolution, photorealistic",
+      "brandColors": ["#1A1A1A", "#ECEFF1"]
+    },
+    {
+      "name": "Ceramic Pour-Over Dripper",
+      "slug": "ceramic-pour-over",
+      "description": "Handmade ceramic pour-over coffee dripper in speckled cream glaze. Fits standard mugs. Comes with 50 unbleached filters.",
+      "heroImagePrompt": "Professional product photography of a handmade speckled cream ceramic pour-over coffee dripper sitting on a matte black mug, coffee mid-pour with visible stream, warm morning light, rustic wood countertop, artisan lifestyle advertising, high resolution, photorealistic",
+      "brandColors": ["#D7CCC8", "#1A1A1A"]
+    }
+  ],
+  "targetPlatforms": ["instagram", "facebook", "youtube"],
+  "textOverlay": {
+    "headline": "Midnight Roast",
+    "subheadline": "Dark, bold, unapologetically smooth",
+    "ctaText": "Explore the Collection",
+    "fontColor": "#D4873F",
+    "position": "bottom"
+  }
+}

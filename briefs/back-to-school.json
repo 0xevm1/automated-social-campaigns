@@ -1,0 +1,28 @@
+{
+  "campaignName": "Back to School Essentials 2026",
+  "campaignMessage": "Start the year organized, stylish, and ready to learn",
+  "products": [
+    {
+      "name": "Atlas Backpack",
+      "slug": "atlas-backpack",
+      "description": "Durable 28L laptop backpack in charcoal gray with orange zippers. Water-resistant fabric, padded straps, dedicated tablet sleeve.",
+      "heroImagePrompt": "Professional product photography of a modern charcoal gray backpack with bright orange zipper details, slightly angled view showing laptop compartment, clean white background, back-to-school advertising style, high resolution, photorealistic",
+      "brandColors": ["#37474F", "#FF6D00"]
+    },
+    {
+      "name": "Scribe Notebook Set",
+      "slug": "scribe-notebook-set",
+      "description": "Set of three A5 hardcover notebooks in pastel blue, pink, and mint. Dotted grid pages, lay-flat binding, ribbon bookmark.",
+      "heroImagePrompt": "Professional product photography of three premium hardcover notebooks fanned out, pastel blue pink and mint colors, one open showing dotted grid pages, marble surface, stationery advertising style, soft natural lighting, high resolution, photorealistic",
+      "brandColors": ["#90CAF9", "#F48FB1", "#A5D6A7"]
+    }
+  ],
+  "targetPlatforms": ["instagram", "facebook"],
+  "textOverlay": {
+    "headline": "Back to School",
+    "subheadline": "Everything you need to start strong",
+    "ctaText": "Shop Now",
+    "fontColor": "#FFFFFF",
+    "position": "bottom"
+  }
+}

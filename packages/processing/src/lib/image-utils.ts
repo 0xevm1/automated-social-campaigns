@@ -39,62 +39,89 @@ export function buildTextOverlaySvg(
   options: TextOverlayOptions,
 ): Buffer {
   const fontColor = options.fontColor ?? '#FFFFFF';
-  const fontSize = options.fontSize ?? Math.round(width * 0.05);
-  const subFontSize = Math.round(fontSize * 0.65);
-  const ctaFontSize = Math.round(fontSize * 0.55);
+  const fontSize = options.fontSize ?? Math.round(width * 0.045);
+  const subFontSize = Math.round(fontSize * 0.6);
+  const ctaFontSize = Math.round(fontSize * 0.5);
+  const fontStack = 'Noto Sans, Liberation Sans, DejaVu Sans, FreeSans, sans-serif';
+  const pad = Math.round(width * 0.05);
 
-  let yPosition: number;
+  // Calculate bar height based on content
+  let contentLines = 1; // headline
+  if (options.subheadline) contentLines++;
+  if (options.ctaText) contentLines++;
+  const lineSpacing = fontSize * 1.35;
+  const barPadY = Math.round(fontSize * 0.9);
+  const barHeight = barPadY * 2 + lineSpacing * contentLines + (options.ctaText ? Math.round(ctaFontSize * 0.4) : 0);
+
+  // Position the bar
+  let barY: number;
   switch (options.position ?? 'bottom') {
     case 'top':
-      yPosition = Math.round(height * 0.15);
+      barY = 0;
       break;
     case 'center':
-      yPosition = Math.round(height * 0.45);
+      barY = Math.round((height - barHeight) / 2);
       break;
     case 'bottom':
-      yPosition = Math.round(height * 0.75);
+      barY = height - barHeight;
       break;
   }
 
-  const lines: string[] = [];
+  const elements: string[] = [];
 
-  const barHeight = fontSize * 3.5;
-  const barY = yPosition - fontSize * 1.2;
-  lines.push(
-    `<rect x="0" y="${barY}" width="${width}" height="${barHeight}" fill="rgba(0,0,0,0.5)" rx="0" />`
+  // Solid dark bar anchored to edge
+  elements.push(
+    `<rect x="0" y="${barY}" width="${width}" height="${barHeight}" fill="#1a1a1a" opacity="0.88" />`,
   );
 
-  lines.push(
-    `<text x="${width / 2}" y="${yPosition}" text-anchor="middle" ` +
-    `font-family="Liberation Sans, DejaVu Sans, Arial, Helvetica, sans-serif" font-size="${fontSize}" ` +
-    `font-weight="bold" fill="${fontColor}">${escapeXml(options.headline)}</text>`
+  // Thin accent line at the top of the bar
+  elements.push(
+    `<rect x="${pad}" y="${barY}" width="${width - pad * 2}" height="2" fill="${fontColor}" opacity="0.3" />`,
   );
 
+  // Headline — left-aligned, uppercase, tracked out
+  const textY = barY + barPadY + fontSize;
+  elements.push(
+    `<text x="${pad}" y="${textY}" ` +
+    `font-family="${fontStack}" font-size="${fontSize}" ` +
+    `font-weight="700" letter-spacing="${Math.round(fontSize * 0.08)}" ` +
+    `fill="${fontColor}">${escapeXml(options.headline.toUpperCase())}</text>`,
+  );
+
+  // Subheadline — left-aligned, regular weight
+  let nextY = textY + lineSpacing;
   if (options.subheadline) {
-    lines.push(
-      `<text x="${width / 2}" y="${yPosition + fontSize * 1.2}" text-anchor="middle" ` +
-      `font-family="Liberation Sans, DejaVu Sans, Arial, Helvetica, sans-serif" font-size="${subFontSize}" ` +
-      `fill="${fontColor}">${escapeXml(options.subheadline)}</text>`
+    elements.push(
+      `<text x="${pad}" y="${nextY}" ` +
+      `font-family="${fontStack}" font-size="${subFontSize}" ` +
+      `font-weight="400" fill="${fontColor}" opacity="0.8">${escapeXml(options.subheadline)}</text>`,
     );
+    nextY += lineSpacing;
   }
 
+  // CTA — pill button, left-aligned
   if (options.ctaText) {
-    const ctaY = yPosition + fontSize * (options.subheadline ? 2.2 : 1.4);
-    const ctaWidth = options.ctaText.length * ctaFontSize * 0.7 + 40;
-    const ctaHeight = ctaFontSize * 1.8;
-    lines.push(
-      `<rect x="${(width - ctaWidth) / 2}" y="${ctaY - ctaFontSize * 0.9}" ` +
-      `width="${ctaWidth}" height="${ctaHeight}" fill="${fontColor}" rx="8" />`
+    const ctaPadX = Math.round(ctaFontSize * 1.2);
+    const ctaPadY = Math.round(ctaFontSize * 0.65);
+    const ctaW = options.ctaText.length * ctaFontSize * 0.6 + ctaPadX * 2;
+    const ctaH = ctaFontSize + ctaPadY * 2;
+    const ctaRectY = nextY - Math.round(ctaFontSize * 0.3);
+
+    elements.push(
+      `<rect x="${pad}" y="${ctaRectY}" width="${ctaW}" height="${ctaH}" ` +
+      `fill="${fontColor}" rx="${Math.round(ctaH / 2)}" />`,
     );
-    lines.push(
-      `<text x="${width / 2}" y="${ctaY + ctaFontSize * 0.2}" text-anchor="middle" ` +
-      `font-family="Liberation Sans, DejaVu Sans, Arial, Helvetica, sans-serif" font-size="${ctaFontSize}" ` +
-      `font-weight="bold" fill="#000000">${escapeXml(options.ctaText)}</text>`
+    elements.push(
+      `<text x="${pad + ctaPadX}" y="${ctaRectY + Math.round(ctaH / 2)}" ` +
+      `dominant-baseline="central" ` +
+      `font-family="${fontStack}" font-size="${ctaFontSize}" ` +
+      `font-weight="600" letter-spacing="${Math.round(ctaFontSize * 0.05)}" ` +
+      `fill="#1a1a1a">${escapeXml(options.ctaText.toUpperCase())}</text>`,
     );
   }
 
   const svg = `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
-${lines.join('\n')}
+${elements.join('\n')}
 </svg>`;
 
   return Buffer.from(svg);
