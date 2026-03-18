@@ -1,0 +1,24 @@
+{
+  "name": "@asc/intake",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@asc/shared": "workspace:*",
+    "@azure/msal-node": "^5.1.0",
+    "@microsoft/microsoft-graph-client": "^3.0.7",
+    "commander": "^14.0.3",
+    "fastify": "catalog:",
+    "googleapis": "^171.4.0",
+    "yaml": "^2.8.2"
+  },
+  "devDependencies": {
+    "tsx": "catalog:",
+    "typescript": "catalog:"
+  }
+}

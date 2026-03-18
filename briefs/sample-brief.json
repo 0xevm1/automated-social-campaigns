@@ -1,0 +1,28 @@
+{
+  "campaignName": "Spring Fresh Launch 2026",
+  "campaignMessage": "Refresh your routine with nature's best ingredients",
+  "products": [
+    {
+      "name": "EcoClean Detergent",
+      "slug": "eco-clean-detergent",
+      "description": "Plant-based laundry detergent with lavender essential oil. Eco-friendly packaging, vibrant purple and green branding.",
+      "heroImagePrompt": "Professional product photography of a modern eco-friendly laundry detergent bottle, purple and green color scheme, lavender sprigs around the bottle, clean white background, studio lighting, commercial advertising style, high resolution, photorealistic",
+      "brandColors": ["#6B2FA0", "#4CAF50"]
+    },
+    {
+      "name": "Fresh Glow Moisturizer",
+      "slug": "fresh-glow-moisturizer",
+      "description": "Hydrating face moisturizer with vitamin C and hyaluronic acid. Minimalist white and gold packaging.",
+      "heroImagePrompt": "Professional product photography of a premium face moisturizer jar, minimalist white and gold packaging, dewy fresh skin texture background, clean studio lighting, luxury cosmetics advertising style, high resolution, photorealistic",
+      "brandColors": ["#FFFFFF", "#D4AF37"]
+    }
+  ],
+  "targetPlatforms": ["instagram", "facebook", "tiktok"],
+  "textOverlay": {
+    "headline": "Spring Fresh Launch",
+    "subheadline": "Refresh your routine with nature's best",
+    "ctaText": "Shop Now",
+    "fontColor": "#FFFFFF",
+    "position": "bottom"
+  }
+}

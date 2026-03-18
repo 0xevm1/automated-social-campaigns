@@ -1,0 +1,14 @@
+node_modules
+dist
+src
+.next
+*.log
+.env
+.env.*
+!.env.example
+.git
+.github
+.claude
+localstack-data
+output
+assets/products/*/generated

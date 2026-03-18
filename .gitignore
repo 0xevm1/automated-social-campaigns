@@ -1,0 +1,14 @@
+node_modules/
+dist/
+output/
+.next/
+.env
+.env.local
+*.tgz
+.DS_Store
+*.md
+*.pdf
+!README.md
+.*/
+.google-token.json
+localstack-data/

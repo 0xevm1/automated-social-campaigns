@@ -1,0 +1,76 @@
+services:
+  localstack:
+    image: localstack/localstack:3
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=s3,sns,sqs,dynamodb,sts
+      - DEBUG=0
+    volumes:
+      - localstack-data:/var/lib/localstack
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4566/_localstack/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  localstack-init:
+    image: localstack/localstack:3
+    depends_on:
+      localstack:
+        condition: service_healthy
+    volumes:
+      - ./scripts/localstack-init.sh:/init.sh:ro
+    entrypoint: ["/bin/bash", "/init.sh"]
+    environment:
+      - AWS_DEFAULT_REGION=${AWS_REGION:-us-east-1}
+      - LOCALSTACK_HOST=localstack
+
+  intake:
+    build: .
+    command: ["node", "packages/intake/dist/index.js", "watch", "--webhook"]
+    depends_on:
+      localstack-init:
+        condition: service_completed_successfully
+    ports:
+      - "4567:3000"
+    env_file: .env
+    environment:
+      - AWS_ENDPOINT_URL=http://localstack:4566
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - "SNS_TOPIC_ARN_PREFIX=arn:aws:sns:us-east-1:000000000000:"
+      - SQS_QUEUE_URL_PREFIX=http://localstack:4566/000000000000/
+
+  processing:
+    build: .
+    command: ["node", "packages/processing/dist/index.js"]
+    depends_on:
+      localstack-init:
+        condition: service_completed_successfully
+    env_file: .env
+    environment:
+      - AWS_ENDPOINT_URL=http://localstack:4566
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - "SNS_TOPIC_ARN_PREFIX=arn:aws:sns:us-east-1:000000000000:"
+      - SQS_QUEUE_URL_PREFIX=http://localstack:4566/000000000000/
+
+  campaign-runner:
+    build: .
+    command: ["node", "packages/campaign-runner/dist/index.js"]
+    depends_on:
+      localstack-init:
+        condition: service_completed_successfully
+    ports:
+      - "4568:3001"
+    env_file: .env
+    environment:
+      - AWS_ENDPOINT_URL=http://localstack:4566
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - "SNS_TOPIC_ARN_PREFIX=arn:aws:sns:us-east-1:000000000000:"
+      - SQS_QUEUE_URL_PREFIX=http://localstack:4566/000000000000/
+
+volumes:
+  localstack-data:
