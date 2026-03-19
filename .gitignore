@@ -10,5 +10,6 @@ output/
 *.pdf
 !README.md
 .*/
+!.github/
 .google-token.json
 localstack-data/
