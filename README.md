@@ -4,6 +4,14 @@
 ![Tests](badges/tests.svg)
 ![Coverage](badges/coverage.svg)
 
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-000000?logo=nextdotjs&logoColor=white)
+![AWS](https://img.shields.io/badge/AWS-232F3E?logo=amazonwebservices&logoColor=white)
+![Google Gemini](https://img.shields.io/badge/Google%20Gemini-8E75B2?logo=googlegemini&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-5FA04E?logo=nodedotjs&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
+![pnpm](https://img.shields.io/badge/pnpm-F69220?logo=pnpm&logoColor=white)
+
 Creative automation pipeline that turns campaign briefs into production-ready social media images. Provide a brief with products and a message — the system validates it, runs compliance checks, generates hero images via Google Gemini Imagen, composites text overlays, and outputs images in three aspect ratios to S3.
 
 ![Campaign output results](assets/demo-output-results.png)
