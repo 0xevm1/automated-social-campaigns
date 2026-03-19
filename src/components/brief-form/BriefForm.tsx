@@ -20,6 +20,7 @@ interface ProductData {
   heroImagePrompt: string;
   brandColors: string[];
   heroImageUploaded?: boolean;
+  logoUploaded?: boolean;
 }
 
 interface TextOverlayData {
@@ -37,6 +38,7 @@ const emptyProduct: ProductData = {
   heroImagePrompt: '',
   brandColors: [],
   heroImageUploaded: false,
+  logoUploaded: false,
 };
 
 const emptyOverlay: TextOverlayData = {
@@ -77,6 +79,7 @@ export function BriefForm() {
         };
         if (p.heroImagePrompt) prod.heroImagePrompt = p.heroImagePrompt;
         if (p.brandColors.length > 0) prod.brandColors = p.brandColors;
+        if (p.logoUploaded) prod.logoPath = `products/${p.slug}/logo.png`;
         return prod;
       }),
     };
@@ -147,6 +150,7 @@ export function BriefForm() {
         heroImagePrompt: p.heroImagePrompt ?? '',
         brandColors: p.brandColors ?? [],
         heroImageUploaded: false,
+        logoUploaded: false,
       })),
     );
     if (brief.targetPlatforms) {

@@ -8,7 +8,7 @@ import {
   putObject,
   createLogger,
 } from '@asc/shared';
-import { resizeToRatio, buildTextOverlaySvg, compositeOverlay } from '../lib/image-utils.js';
+import { resizeToRatio, buildTextOverlaySvg, compositeOverlay, compositeLogoOnBar } from '../lib/image-utils.js';
 
 /**
  * Compositor reads hero from S3, resizes, overlays text, writes output to S3,
@@ -38,7 +38,7 @@ export function registerCompositor(bus: EventBus): void {
         headline: brief.campaignMessage,
       };
 
-      const overlaySvg = buildTextOverlaySvg(
+      const overlayResult = buildTextOverlaySvg(
         dimensions.width,
         dimensions.height,
         {
@@ -52,7 +52,29 @@ export function registerCompositor(bus: EventBus): void {
       );
 
       // Composite text overlay onto resized image
-      const compositeBuffer = await compositeOverlay(resizedBuffer, overlaySvg);
+      let compositeBuffer = await compositeOverlay(resizedBuffer, overlayResult.svg);
+
+      // Composite logo on the overlay bar if product has a logo
+      if (product.logoPath) {
+        log.info({ product: product.slug, logoPath: product.logoPath, ratio }, 'Compositing logo onto overlay bar');
+        try {
+          const logoBuffer = await getObject(product.logoPath);
+          const pad = Math.round(dimensions.width * 0.05);
+          compositeBuffer = await compositeLogoOnBar(
+            compositeBuffer,
+            logoBuffer,
+            overlayResult.barY,
+            overlayResult.barHeight,
+            dimensions.width,
+            pad,
+          );
+          log.info({ product: product.slug, ratio }, 'Logo composited successfully');
+        } catch (logoErr) {
+          log.error({ product: product.slug, logoPath: product.logoPath, error: logoErr instanceof Error ? logoErr.message : String(logoErr) }, 'Failed to composite logo, continuing without it');
+        }
+      } else {
+        log.info({ product: product.slug, ratio }, 'No logoPath set, skipping logo composite');
+      }
 
       // Write composite to S3
       const s3Key = S3_KEYS.composite(payload.correlationId, product.slug, ratio);

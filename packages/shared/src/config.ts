@@ -31,6 +31,7 @@ export const CONFIG = {
 /** S3 key helpers */
 export const S3_KEYS = {
   heroImage: (slug: string) => `products/${slug}/hero.png`,
+  logo: (slug: string) => `products/${slug}/logo.png`,
   brief: (correlationId: string) => `campaigns/${correlationId}/brief.json`,
   composite: (correlationId: string, slug: string, ratio: string) =>
     `campaigns/${correlationId}/output/${slug}/${ratio}/${slug}_${ratio}.png`,

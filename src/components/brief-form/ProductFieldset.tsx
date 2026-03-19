@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { HeroImageUpload } from './HeroImageUpload';
+import { LogoUpload } from './LogoUpload';
 
 interface ProductData {
   name: string;
@@ -14,6 +15,7 @@ interface ProductData {
   heroImagePrompt: string;
   brandColors: string[];
   heroImageUploaded?: boolean;
+  logoUploaded?: boolean;
 }
 
 interface ProductFieldsetProps {
@@ -109,6 +111,16 @@ export function ProductFieldset({
           slug={product.slug}
           onUploadComplete={(s3Key) => {
             onChange(index, { ...product, heroImageUploaded: !!s3Key });
+          }}
+        />
+      </div>
+
+      <div className="space-y-1">
+        <Label>Product Logo</Label>
+        <LogoUpload
+          slug={product.slug}
+          onUploadComplete={(s3Key) => {
+            onChange(index, { ...product, logoUploaded: !!s3Key });
           }}
         />
       </div>

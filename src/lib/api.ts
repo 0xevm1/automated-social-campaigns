@@ -98,6 +98,27 @@ export async function uploadProductHero(
   return response.json();
 }
 
+export async function uploadProductLogo(
+  slug: string,
+  file: File,
+): Promise<{ key: string }> {
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('slug', slug);
+
+  const response = await fetch('/api/upload/product-logo', {
+    method: 'POST',
+    body: formData,
+  });
+
+  if (!response.ok) {
+    const data = await response.json().catch(() => ({ error: 'Upload failed' }));
+    throw new Error(data.error ?? 'Upload failed');
+  }
+
+  return response.json();
+}
+
 export interface ComplianceCheck {
   category: 'prohibited-words' | 'brand-colors' | 'logo-presence';
   scope: string;
