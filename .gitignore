@@ -1,6 +1,8 @@
 node_modules/
 dist/
 *.tsbuildinfo
+test-results.json
+coverage/
 output/
 .next/
 .env

@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: write
+
 jobs:
   test:
     name: Lint & Test
@@ -27,4 +30,42 @@ jobs:
 
       - run: pnpm lint
 
-      - run: pnpm test
+      - name: Run tests with coverage
+        run: pnpm test -- --run --coverage --reporter=json --reporter=default --outputFile=test-results.json
+
+      - name: Generate badge data
+        if: github.ref == 'refs/heads/main' && success()
+        run: |
+          TOTAL=$(jq '.numTotalTests' test-results.json)
+          PASSED=$(jq '.numPassedTests' test-results.json)
+          COVERAGE=$(jq '.total.lines.pct' coverage/coverage-summary.json)
+
+          # Coverage badge color
+          COV_COLOR="red"
+          if (( $(echo "$COVERAGE >= 80" | bc -l) )); then
+            COV_COLOR="brightgreen"
+          elif (( $(echo "$COVERAGE >= 60" | bc -l) )); then
+            COV_COLOR="green"
+          elif (( $(echo "$COVERAGE >= 40" | bc -l) )); then
+            COV_COLOR="yellow"
+          fi
+
+          # Test badge color
+          if [ "$PASSED" = "$TOTAL" ]; then
+            TEST_COLOR="brightgreen"
+          else
+            TEST_COLOR="red"
+          fi
+
+          mkdir -p badges
+          echo "{\"schemaVersion\":1,\"label\":\"tests\",\"message\":\"${PASSED}/${TOTAL} passing\",\"color\":\"${TEST_COLOR}\"}" > badges/tests.json
+          echo "{\"schemaVersion\":1,\"label\":\"coverage\",\"message\":\"${COVERAGE}%\",\"color\":\"${COV_COLOR}\"}" > badges/coverage.json
+
+      - name: Publish badges
+        if: github.ref == 'refs/heads/main' && success()
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./badges
+          publish_branch: badges
+          keep_files: true
