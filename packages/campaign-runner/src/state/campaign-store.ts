@@ -49,7 +49,7 @@ export async function updateCampaignStatus(
 
   const expressionParts = ['#status = :status'];
   const names: Record<string, string> = { '#status': 'status' };
-  const values: Record<string, any> = { ':status': status };
+  const values: Record<string, unknown> = { ':status': status };
 
   if (updates.campaignName !== undefined) {
     expressionParts.push('campaignName = :campaignName');

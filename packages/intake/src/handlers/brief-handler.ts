@@ -1,6 +1,5 @@
 import {
   CampaignBriefSchema,
-  type CampaignBrief,
   S3_KEYS,
   SNS_TOPICS,
   putObject,

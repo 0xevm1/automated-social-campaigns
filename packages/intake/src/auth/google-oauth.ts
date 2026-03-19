@@ -1,6 +1,6 @@
 import { google } from 'googleapis';
 import fs from 'node:fs';
-import path from 'node:path';
+
 import { logger } from '@asc/shared';
 
 const TOKEN_PATH = process.env.GOOGLE_TOKEN_PATH ?? '.google-token.json';

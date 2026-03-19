@@ -6,7 +6,6 @@ import {
   createLogger,
 } from '@asc/shared';
 import { getCampaign, createCampaign, addS3Key, addComplianceWarning } from '../state/campaign-store.js';
-import type { CampaignState } from '@asc/shared';
 
 export async function handleProgressEvent(message: ServiceMessage): Promise<void> {
   const { eventType, correlationId } = message;
