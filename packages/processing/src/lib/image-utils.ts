@@ -102,18 +102,19 @@ export function buildTextOverlaySvg(
   // CTA — pill button, left-aligned
   if (options.ctaText) {
     const ctaPadX = Math.round(ctaFontSize * 1.2);
-    const ctaPadY = Math.round(ctaFontSize * 0.65);
-    const ctaW = options.ctaText.length * ctaFontSize * 0.6 + ctaPadX * 2;
+    const ctaPadY = Math.round(ctaFontSize * 0.8);
+    const ctaW = options.ctaText.length * ctaFontSize * 0.68 + ctaPadX * 2;
     const ctaH = ctaFontSize + ctaPadY * 2;
     const ctaRectY = nextY - Math.round(ctaFontSize * 0.3);
+    // Position text baseline at rect center + ~0.35em (ascender offset for visual centering)
+    const ctaTextY = ctaRectY + Math.round(ctaH / 2) + Math.round(ctaFontSize * 0.35);
 
     elements.push(
       `<rect x="${pad}" y="${ctaRectY}" width="${ctaW}" height="${ctaH}" ` +
       `fill="${fontColor}" rx="${Math.round(ctaH / 2)}" />`,
     );
     elements.push(
-      `<text x="${pad + ctaPadX}" y="${ctaRectY + Math.round(ctaH / 2)}" ` +
-      `dominant-baseline="central" ` +
+      `<text x="${pad + ctaPadX}" y="${ctaTextY}" ` +
       `font-family="${fontStack}" font-size="${ctaFontSize}" ` +
       `font-weight="600" letter-spacing="${Math.round(ctaFontSize * 0.05)}" ` +
       `fill="#1a1a1a">${escapeXml(options.ctaText.toUpperCase())}</text>`,

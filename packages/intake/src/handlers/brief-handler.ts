@@ -6,6 +6,7 @@ import {
   putObject,
   publishToTopic,
   createLogger,
+  reportCampaignSubmission,
 } from '@asc/shared';
 import { runFullComplianceCheck } from '../pipeline/compliance.js';
 
@@ -27,6 +28,7 @@ export async function handleBrief(
     // Validate
     const brief = CampaignBriefSchema.parse(briefData);
     log.info({ campaign: brief.campaignName }, 'Brief validated');
+    reportCampaignSubmission(brief.campaignName);
 
     // Compliance checks (prohibited words, brand colors, logo presence)
     const complianceReport = await runFullComplianceCheck(brief, correlationId);
