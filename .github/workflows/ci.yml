@@ -33,14 +33,13 @@ jobs:
       - name: Run tests with coverage
         run: pnpm test -- --run --coverage --reporter=json --reporter=default --outputFile=test-results.json
 
-      - name: Generate badge data
+      - name: Generate badges
         if: github.ref == 'refs/heads/main' && success()
         run: |
           TOTAL=$(jq '.numTotalTests' test-results.json)
           PASSED=$(jq '.numPassedTests' test-results.json)
           COVERAGE=$(jq '.total.lines.pct' coverage/coverage-summary.json)
 
-          # Coverage badge color
           COV_COLOR="red"
           if (( $(echo "$COVERAGE >= 80" | bc -l) )); then
             COV_COLOR="brightgreen"
@@ -50,7 +49,6 @@ jobs:
             COV_COLOR="yellow"
           fi
 
-          # Test badge color
           if [ "$PASSED" = "$TOTAL" ]; then
             TEST_COLOR="brightgreen"
           else
@@ -58,14 +56,13 @@ jobs:
           fi
 
           mkdir -p badges
-          echo "{\"schemaVersion\":1,\"label\":\"tests\",\"message\":\"${PASSED}/${TOTAL} passing\",\"color\":\"${TEST_COLOR}\"}" > badges/tests.json
-          echo "{\"schemaVersion\":1,\"label\":\"coverage\",\"message\":\"${COVERAGE}%\",\"color\":\"${COV_COLOR}\"}" > badges/coverage.json
+          curl -sf "https://img.shields.io/badge/tests-${PASSED}%2F${TOTAL}%20passing-${TEST_COLOR}" > badges/tests.svg
+          curl -sf "https://img.shields.io/badge/coverage-${COVERAGE}%25-${COV_COLOR}" > badges/coverage.svg
 
-      - name: Publish badges
+      - name: Commit badges
         if: github.ref == 'refs/heads/main' && success()
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./badges
-          publish_branch: badges
-          keep_files: true
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add badges/
+          git diff --cached --quiet || (git commit -m "update test badges [skip ci]" && git push)
