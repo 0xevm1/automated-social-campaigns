@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { parse as parseYaml } from 'yaml';
 import { randomUUID } from 'node:crypto';
-import { logger } from '@asc/shared';
+import { logger, reportStartup } from '@asc/shared';
 import { handleBrief } from './handlers/brief-handler.js';
 import { startWebhookServer } from './server.js';
 import { GmailWatcher } from './watchers/gmail.js';
@@ -121,6 +121,8 @@ program
 
     logger.info({ watchers: watchers.map((w) => w.name) }, 'Intake service running');
   });
+
+reportStartup();
 
 // Filter out bare '--' that pnpm injects when forwarding args
 const args = process.argv.filter((arg, i) => !(arg === '--' && i >= 2));

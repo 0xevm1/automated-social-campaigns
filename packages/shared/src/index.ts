@@ -43,3 +43,6 @@ export type { MessageHandler, SqsConsumerOptions } from './lib/sqs-consumer.js';
 
 // Logger
 export { createLogger, logger } from './lib/logger.js';
+
+// Telemetry
+export { reportStartup, reportCampaignSubmission } from './lib/telemetry.js';

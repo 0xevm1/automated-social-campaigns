@@ -5,6 +5,7 @@ services:
       - "4566:4566"
     environment:
       - SERVICES=s3,sns,sqs,dynamodb,sts
+      - PERSISTENCE=1
       - DEBUG=0
     volumes:
       - localstack-data:/var/lib/localstack

@@ -3,6 +3,7 @@ import {
   createSqsConsumer,
   SQS_QUEUES,
   logger,
+  reportStartup,
   type ServiceMessage,
   type BriefValidatedPayload,
 } from '@asc/shared';
@@ -39,6 +40,7 @@ function shutdown() {
 process.on('SIGINT', shutdown);
 process.on('SIGTERM', shutdown);
 
+reportStartup();
 logger.info('Processing service starting...');
 consumer.poll().catch((err) => {
   logger.error(err, 'Processing service fatal error');

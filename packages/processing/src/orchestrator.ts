@@ -12,6 +12,7 @@ import {
   type AspectRatioKey,
   S3_KEYS,
   SNS_TOPICS,
+  getObject,
   putObject,
   publishToTopic,
   createLogger,
@@ -74,14 +75,24 @@ export function createOrchestrator(bus: EventBus, options: OrchestratorOptions =
     const manifestKey = S3_KEYS.manifest(correlationId);
     await putObject(manifestKey, JSON.stringify(manifest, null, 2), 'application/json');
 
-    // Write final compliance report (overwrites intake-phase report with full picture)
+    // Merge intake compliance report with processing-phase warnings
     const complianceKey = S3_KEYS.complianceReport(correlationId);
+    let intakeChecks: unknown[] = [];
+    try {
+      const existing = JSON.parse(
+        (await getObject(complianceKey)).toString('utf-8'),
+      );
+      intakeChecks = existing.checks ?? [];
+    } catch {
+      // No intake report found — continue without checks
+    }
     await putObject(
       complianceKey,
       JSON.stringify({
         correlationId,
         campaignName: activeBrief.campaignName,
         completedAt: new Date().toISOString(),
+        checks: intakeChecks,
         warnings: allWarnings,
         warningCount: allWarnings.length,
       }, null, 2),
