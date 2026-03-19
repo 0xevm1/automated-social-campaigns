@@ -1,5 +1,7 @@
 # Automated Social Campaigns
 
+[![CI](https://github.com/0xevm1/automated-social-campaigns/actions/workflows/ci.yml/badge.svg)](https://github.com/0xevm1/automated-social-campaigns/actions/workflows/ci.yml)
+
 Creative automation pipeline that turns campaign briefs into production-ready social media images. Provide a brief with products and a message — the system validates it, runs compliance checks, generates hero images via Google Gemini Imagen, composites text overlays, and outputs images in three aspect ratios to S3.
 
 ![Campaign output results](assets/demo-output-results.png)
