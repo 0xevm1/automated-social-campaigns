@@ -3,6 +3,7 @@ import {
   createSqsConsumer,
   SQS_QUEUES,
   logger,
+  reportStartup,
   type ServiceMessage,
 } from '@asc/shared';
 import { handleProgressEvent } from './handlers/progress-handler.js';
@@ -43,6 +44,7 @@ startStatusServer(statusPort).catch((err) => {
   logger.warn(err, 'Status server failed to start (non-fatal)');
 });
 
+reportStartup();
 logger.info('Campaign runner starting...');
 consumer.poll().catch((err) => {
   logger.error(err, 'Campaign runner fatal error');

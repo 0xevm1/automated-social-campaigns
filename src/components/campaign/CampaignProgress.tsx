@@ -5,6 +5,7 @@ import { useCampaignPolling } from '@/lib/hooks';
 import { StatusBadge } from './StatusBadge';
 import { ProductProgress } from './ProductProgress';
 import { ImageGallery } from './ImageGallery';
+import { ComplianceChecklist } from './ComplianceChecklist';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
@@ -111,16 +112,7 @@ export function CampaignProgress({ correlationId }: CampaignProgressProps) {
         </CardContent>
       </Card>
 
-      {data.complianceWarnings.length > 0 && (
-        <div className="bg-yellow-50 border border-yellow-200 text-yellow-700 rounded-lg p-4">
-          <p className="font-medium text-sm mb-1">Compliance Warnings</p>
-          <ul className="list-disc list-inside text-sm space-y-1">
-            {data.complianceWarnings.map((warning, i) => (
-              <li key={i}>{warning}</li>
-            ))}
-          </ul>
-        </div>
-      )}
+      <ComplianceChecklist correlationId={correlationId} />
 
       {products.length > 0 && (
         <div>

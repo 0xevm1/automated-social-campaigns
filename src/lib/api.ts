@@ -98,6 +98,35 @@ export async function uploadProductHero(
   return response.json();
 }
 
+export interface ComplianceCheck {
+  category: 'prohibited-words' | 'brand-colors' | 'logo-presence';
+  scope: string;
+  status: 'pass' | 'warn';
+  details?: string;
+}
+
+export interface ComplianceReport {
+  correlationId: string;
+  campaignName: string;
+  checks: ComplianceCheck[];
+  warnings: string[];
+  warningCount: number;
+}
+
+export async function getComplianceReport(
+  correlationId: string,
+): Promise<ComplianceReport | null> {
+  try {
+    const response = await fetch(
+      `/api/images/campaigns/${correlationId}/compliance-report.json`,
+    );
+    if (!response.ok) return null;
+    return response.json();
+  } catch {
+    return null;
+  }
+}
+
 export function getImageUrl(s3Key: string): string {
   return `/api/images/${s3Key}`;
 }

@@ -11,6 +11,7 @@ import {
 import type { CampaignState } from '@/lib/api';
 import type { CampaignBrief } from '@asc/shared/schemas/campaign-brief';
 import { StatusBadge } from '@/components/campaign/StatusBadge';
+import { ComplianceChecklist } from '@/components/campaign/ComplianceChecklist';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -203,11 +204,7 @@ function CampaignCard({ entry }: { entry: CampaignEntry }) {
       <CardContent className="space-y-4">
         {brief && <BriefDetails brief={brief} />}
 
-        {state.complianceWarnings.length > 0 && (
-          <div className="bg-yellow-50 border border-yellow-200 text-yellow-700 rounded-md px-3 py-2 text-xs">
-            {state.complianceWarnings.join('; ')}
-          </div>
-        )}
+        <ComplianceChecklist correlationId={correlationId} />
 
         <CampaignImages s3Keys={state.s3Keys} />
       </CardContent>

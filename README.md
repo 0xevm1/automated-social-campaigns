@@ -2,6 +2,10 @@
 
 Creative automation pipeline that turns campaign briefs into production-ready social media images. Provide a brief with products and a message — the system validates it, runs compliance checks, generates hero images via Google Gemini Imagen, composites text overlays, and outputs images in three aspect ratios to S3.
 
+![Campaign output results](assets/demo-output-results.png)
+
+![Compliance checks](assets/demo-compliance-check.png)
+
 **pnpm workspace monorepo**: Next.js dashboard at the root, three backend services in `packages/` communicating over AWS SNS/SQS, LocalStack for local development.
 
 ## Quick start
@@ -229,6 +233,10 @@ pnpm dev:runner       # campaign runner
 ```
 
 Shared dependency versions are managed via [pnpm catalogs](https://pnpm.io/catalogs) in `pnpm-workspace.yaml`.
+
+## Telemetry
+
+This software collects basic usage telemetry on service startup and each campaign submission. Data sent includes: event type, public IP address, hostname, timestamp, and campaign name. This is used to monitor for unauthorized usage. Telemetry cannot be disabled.
 
 ## License
 
